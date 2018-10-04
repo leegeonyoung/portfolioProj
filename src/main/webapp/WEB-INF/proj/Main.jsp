@@ -127,13 +127,13 @@
 				</p>
 
 				<div class="social-icons" style="margin-bottom:/*3rem !important;*/">
-					<a href="#">
+					<a href="https://github.com/leegeonyoung/portfolioProj" target="_blank">
 						<i class="fab fa-github"></i>
 					</a> 
-					<a href="#">
+					<a href="https://www.instagram.com/2_gun0/?hl=ko" target="_blank">
 						<i class="fab fa-linkedin-in"></i>
 					</a>
-					<a href="">
+					<a href="https://www.facebook.com/profile.php?id=100002203464751" target="_blank">
 						<i class="fab fa-facebook-f"></i>
 					</a>
 				</div>
@@ -343,8 +343,10 @@
 				<div class="subheading mb-3">Programming Languages &amp; Tools</div>
 				<ul class="list-inline dev-icons">
 					<li class="list-inline-item" onclick="javascript:eventSkill('java');"><i class="fab fa-java"></i></li>
+<%-- 					<li class="list-inline-item" onclick="javascript:eventSkill('java');"><img src="${pageContext.request.contextPath}/resources/images/springicon.png" style="width:45px; height:50px; margin-bottom:5px;" onMouseOver="this.style.color='#BD5D38';"/></li> --%>
 					<li class="list-inline-item" onclick="javascript:eventSkill('database');"><i class="fas fa-database"></i></li>
 					<li class="list-inline-item" onclick="javascript:eventSkill('js');"><i class="fab fa-js"></i></li>
+					<li class="list-inline-item" onclick="javascript:eventSkill('html');"><i class="fab fa-html5"></i></li>
 					<li class="list-inline-item" onclick="javascript:eventSkill('git');"><i class="fab fa-git"></i></li>
 					<li class="list-inline-item" onclick="javascript:eventSkill('docker');"><i class="fab fa-docker"></i></li>
 <!-- 					<li class="list-inline-item"><i class="fab fa-node-js"></i></li> -->
@@ -745,6 +747,9 @@
 			} else if (Param == 'js') {
 				$("div.progress div.progress-bar.progress-bar-striped.active").css("width", "55%");
 				$("div.progress div.progress-bar.progress-bar-striped.active").text("55%");
+			} else if (Param == 'html'){
+				$("div.progress div.progress-bar.progress-bar-striped.active").css("width", "50%");
+				$("div.progress div.progress-bar.progress-bar-striped.active").text("50%");
 			} else if (Param == 'git') {
 				$("div.progress div.progress-bar.progress-bar-striped.active").css("width", "40%");
 				$("div.progress div.progress-bar.progress-bar-striped.active").text("40%");
