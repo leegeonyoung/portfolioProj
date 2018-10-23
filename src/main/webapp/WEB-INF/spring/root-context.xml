@@ -16,8 +16,9 @@
 	<!-- mybatis와 스프링 연동을 위한 SqlsessionFactory == DB연결 및 SQL 실행 -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
-		<!-- mybatis의 실행 쿼리문을 작성하고 실행하기 위해 위치 설정 -->
+		<!-- mybatis의 실행 쿼리문을 작성하고 실행하기 위해 위치 설정
 		<property name="mapperLocations" value="classpath:mapper/*.xml" />
+		-->
 	</bean>
 	
 	<!-- SQLSessionTemplate 설정하기 > mybatis에서 구현하기 위해 필요한 작업-->
@@ -25,6 +26,7 @@
 		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>
 	</bean>
 	
+	<!-- DAO대신 Mapper Interface 설정 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="basePackage" value="com.sist.proj.mapper"/>
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>

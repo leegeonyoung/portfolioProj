@@ -336,6 +336,8 @@
 
 		<hr class="m-0">
 
+
+
 		<section class="resume-section p-3 p-lg-5 d-flex flex-column"
 			id="skills">
 			<div class="my-auto">
@@ -366,6 +368,12 @@
 		</section>
 
 		<hr class="m-0">
+		
+		<%--
+		<input type="text" id="message" />
+	    <input type="button" id="sendBtn" value="전송" />
+	    <div id="data"></div>
+		--%>
 		
 		<!-- Modal 시작 -->
 		<div id="myModal" class="modal fade" role="dialog">
@@ -507,6 +515,8 @@
 	<script src="${pageContext.request.contextPath}/resources/js/jquery.easing.min.js"></script>
 	<!-- Custom scripts for this template -->
 	<script src="${pageContext.request.contextPath}/resources/js/resume.min.js"></script>
+	<!-- WebSocket -->
+	<script src="${pageContext.request.contextPath}/resources/js/socketjs-0.3.4.js"></script>
 	
 	<!-- 네이버 지도 -->
 	<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=HwGjgOkNdZuaBdEuYK6g&submodules=geocoder"></script>
@@ -604,6 +614,58 @@
 
 							naver.maps.onJSContentLoaded = initGeocoder;
 						});
+
+		//채팅>버튼클릭 시 이벤트
+	    $("#sendBtn").click(function() {
+			console.log("=== lee / 진입");
+            sendMessage();
+        });
+		
+		//소켓
+		var sock;
+	    //웸소켓을 지정한 url로 연결한다.
+	    sock = new SockJS("<c:url value="/echo"/>");
+	    
+	    console.log("=== lee / sock : " + JSON.stringify(sock));
+	    
+	    //자바스크립트 안에 function을 집어넣을 수 있음.
+	    sock.onmessage = onMessage;
+	    //데이터를 끊고싶을때 실행하는 메소드
+	    sock.onclose = onClose;
+	    
+	    function sendMessage() {
+	    	console.log("=== lee / 01 ");
+	        /*소켓으로 보내겠다.  */
+	        sock.send($("#message").val());
+	    }
+	    //evt 파라미터는 웹소켓을 보내준 데이터다.(자동으로 들어옴)
+	    function onMessage(evt) {
+	    	console.log("=== lee / 02 ");
+	        var data 		= evt.data;
+	        var sessionId 	= null;
+	        var message 	= null;
+	        
+	        //문자열 split
+	        var strArray = data.spli('|');
+	        
+	        for(var i = 0; i<strArray.length; i++){
+	        	console.log("str[" + i + "]:" + strArray[i]);
+	        }
+	        
+	        sessionId 	= strArray[0];
+	        message 	= strArray[1];
+	        
+	        var printHtml = "<div class='chat'>";
+	        printHtml += "<strong>[" + sessionId + "] ->" + message + "</strong>";
+	        printHtml += "</div>";
+	        
+	        $("#data").append(printHtml);
+	        
+	    }
+	    function onClose(evt) {
+	    	console.log("=== lee / 03 ");
+	        $("#data").append("연결 끊김");
+	    }
 
 		//지도>위경도>주소
 		function searchCoordinateToAddress(latlng) {
@@ -715,8 +777,7 @@
 			console.log("=== lee / imgUrl :" + imgUrl);
 			if (imgUrl == 'Clouds') {
 				$("div#map div#weather img")
-						.attr("src",
-								"${pageContext.request.contextPath}/resources/images/weather/littlecloud.png");
+						.attr("src","${pageContext.request.contextPath}/resources/images/weather/cloud.png");
 			} else if (imgUrl == 'Clear') {
 				$("div#map div#weather img")
 						.attr("src",
@@ -725,10 +786,9 @@
 				$("div#map div#weather img")
 						.attr("src",
 								"${pageContext.request.contextPath}/resources/images/weather/rainy.png");
-			} else if (imgUrl == 'Mist') {
+			} else if (imgUrl == 'Mist' || imgUrl == 'Haze') {
 				$("div#map div#weather img")
-						.attr("src",
-								"${pageContext.request.contextPath}/resources/images/weather/cloud.png");
+						.attr("src","${pageContext.request.contextPath}/resources/images/weather/littlecloud.png");
 			}
 
 			$("div#map div#weather p").html(
@@ -793,16 +853,9 @@
 		//전화>카카오톡친구추가
 		Kakao.init('28a7f7d4a00026af2fd6648e5260dce5');
 		function addPlusFriend(){
-			
 			Kakao.PlusFriend.chat({
 				plusFriendId : '_xmPFVj' // 플러스친구 홈 URL에 명시된 id로 설정합니다.
 			});
-			
-			/*
-			Kakao.PlusFriend.addFriend({
-				plusFriendId : '_xmPFVj' // 플러스친구 홈 URL에 명시된 id로 설정합니다.
-			});
-			*/
 		}
 	</script>
 
