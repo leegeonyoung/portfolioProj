@@ -23,15 +23,15 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<!-- Websocket 핸들러 
+	<!-- Websocket 핸들러 --> 
 	<beans:bean id="echoHandler" class="com.sist.portfolio.util.EchoHandler"></beans:bean>
-	-->
-	<!-- Websocket 사용 
+	
+	<!-- Websocket 사용 --> 
 	<websocket:handlers>
 		<websocket:mapping handler="echoHandler" path="/echo"/>
 		<websocket:sockjs />
 	</websocket:handlers>
-	-->
+	
 	<context:component-scan base-package="com.sist.portfolio" />
 	
 	

@@ -369,11 +369,9 @@
 
 		<hr class="m-0">
 		
-		<%--
 		<input type="text" id="message" />
 	    <input type="button" id="sendBtn" value="전송" />
 	    <div id="data"></div>
-		--%>
 		 
 		<!-- Modal 시작 -->
 		<div id="myModal" class="modal fade" role="dialog">

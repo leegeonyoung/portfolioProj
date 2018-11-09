@@ -28,7 +28,7 @@
 	
 	<!-- DAO대신 Mapper Interface 설정 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.sist.proj.mapper"/>
+		<property name="basePackage" value="com.sist.portfolio.*mapper"/>
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
 	</bean>
 </beans>
