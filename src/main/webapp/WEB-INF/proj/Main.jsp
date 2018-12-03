@@ -18,29 +18,15 @@
 <title>포트폴리오</title>
 
 <!-- Bootstrap core CSS -->
-<link
-	href="${pageContext.request.contextPath}/resources/css/bootstrap/bootstrap.min.css"
-	rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet">
 <!-- Custom fonts for this template -->
-<link
-	href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700"
-	rel="stylesheet">
-<link
-	href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i"
-	rel="stylesheet">
-<link
-	href="${pageContext.request.contextPath}/resources/css/fontawesome-free/all.min.css"
-	rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i"	rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/fontawesome-free/all.min.css" rel="stylesheet">
 <!-- Custom styles for this template -->
-<link
-	href="${pageContext.request.contextPath}/resources/css/resume.min.css"
-	rel="stylesheet">
-
+<link href="${pageContext.request.contextPath}/resources/css/resume.min.css" rel="stylesheet">
 <!-- weather css -->
-<link
-	href="${pageContext.request.contextPath}/resources/css/weather/weather-icons.min.css"
-	rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/weather/weather-icons.min.css"	rel="stylesheet">
 <style type="text/css">
 .list-inline.dev-icons li {
 	cursor: pointer;
@@ -250,7 +236,6 @@
 							<p>예약 시스템 중복 시간관리</p>
 							<p>서울시 조직도(API)를 통한 담당 소개</p>
 							<p>데이터 엑셀 다운로드 구현</p>
-							<p>문자전송 알림시스템(서울시 문자전송 시스템)</p>
 							<p>메일전송 알림시스템</p>
 							<p>신규컨텐츠 구축(CMS/FRONT)</p>
 						</div>
@@ -275,7 +260,6 @@
 							<p>네이버 지도(API)를 사용하여 Map에 표기</p>
 							<p>게시판 형태 출력</p>
 							<p>퍼블리싱을 통해 화면작업(url경로 페이지 호출 시 DispatcherServlet을 통해 Controller에서 페이지 호출)</p>
-							<p>게시판 형식의 화면을 페이징이 아닌 Ajax를 사용하여 더보기 형식 구현</p>
 							<p>CMS부분 스크립트 처리로 화면 동적컨트롤 후 파일 업로드 구현</p>
 							<p>데이터 DB화로 CMS-FRONT간 연계</p>
 						</div>
@@ -313,7 +297,7 @@
 						<div>
 							<p style="font-weight:bold; color:#343a40;"> - 개발환경</p>
 							<p>
-								java 1.8 / Spring 4.3.12 / Tomcat7(실서버 Docker) / MySql 5.7 / STS / Mybatis / Maven /
+								java 1.8 / Spring 4.3.12 / AMI(Amazon linux) / Tomcat8.5 / MySql 5.7 / STS / Mybatis / Maven 
 							</p>					
 						</div>
 						<div>
@@ -323,6 +307,7 @@
 							<p>프로그래밍 언어 및 툴의 Progress-bar 진행상황 컨트롤</p>
 							<p>메일 전송 기능</p>
 							<p>카카오톡(API) 친구추가</p>
+							<p>아마존 리눅스 기반으로 환경설정 후 배포</p>
 						</div>
 					</div>
 					<div class="resume-date text-md-right">
@@ -369,10 +354,6 @@
 
 		<hr class="m-0">
 		
-		<input type="text" id="message" />
-	    <input type="button" id="sendBtn" value="전송" />
-	    <div id="data"></div>
-		 
 		<!-- Modal 시작 -->
 		<div id="myModal" class="modal fade" role="dialog">
 			<div class="modal-dialog">
@@ -513,8 +494,6 @@
 	<script src="${pageContext.request.contextPath}/resources/js/jquery.easing.min.js"></script>
 	<!-- Custom scripts for this template -->
 	<script src="${pageContext.request.contextPath}/resources/js/resume.min.js"></script>
-	<!-- WebSocket -->
-	<script src="${pageContext.request.contextPath}/resources/js/socketjs-0.3.4.js"></script>
 	
 	<!-- 네이버 지도 -->
 	<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=HwGjgOkNdZuaBdEuYK6g&submodules=geocoder"></script>
@@ -613,57 +592,6 @@
 							naver.maps.onJSContentLoaded = initGeocoder;
 						});
 
-		//채팅>버튼클릭 시 이벤트
-	    $("#sendBtn").click(function() {
-			console.log("=== lee / 진입");
-            sendMessage();
-        });
-		
-		//소켓
-		var sock;
-	    //웸소켓을 지정한 url로 연결한다.
-	    sock = new SockJS("<c:url value="/echo"/>");
-	    
-	    console.log("=== lee / sock : " + JSON.stringify(sock));
-	    
-	    //자바스크립트 안에 function을 집어넣을 수 있음.
-	    sock.onmessage = onMessage;
-	    //데이터를 끊고싶을때 실행하는 메소드
-	    sock.onclose = onClose;
-	    
-	    function sendMessage() {
-	    	console.log("=== lee / 01 ");
-	        /*소켓으로 보내겠다.  */
-	        sock.send($("#message").val());
-	    }
-	    //evt 파라미터는 웹소켓을 보내준 데이터다.(자동으로 들어옴)
-	    function onMessage(evt) {
-	    	console.log("=== lee / 02 ");
-	        var data 		= evt.data;
-	        var sessionId 	= null;
-	        var message 	= null;
-	        
-	        //문자열 split
-	        var strArray = data.spli('|');
-	        
-	        for(var i = 0; i<strArray.length; i++){
-	        	console.log("str[" + i + "]:" + strArray[i]);
-	        }
-	        
-	        sessionId 	= strArray[0];
-	        message 	= strArray[1];
-	        
-	        var printHtml = "<div class='chat'>";
-	        printHtml += "<strong>[" + sessionId + "] ->" + message + "</strong>";
-	        printHtml += "</div>";
-	        
-	        $("#data").append(printHtml);
-	        
-	    }
-	    function onClose(evt) {
-	    	console.log("=== lee / 03 ");
-	        $("#data").append("연결 끊김");
-	    }
 
 		//지도>위경도>주소
 		function searchCoordinateToAddress(latlng) {
@@ -773,24 +701,18 @@
 				}
 			}
 			console.log("=== lee / imgUrl :" + imgUrl);
-			if (imgUrl == 'Clouds') {
-				$("div#map div#weather img")
-						.attr("src","${pageContext.request.contextPath}/resources/images/weather/cloud.png");
+			if (imgUrl == 'Clouds' || imgUrl == 'Drizzle') {
+				$("div#map div#weather img").attr("src","${pageContext.request.contextPath}/resources/images/weather/cloud.png");
 			} else if (imgUrl == 'Clear') {
-				$("div#map div#weather img")
-						.attr("src",
-								"${pageContext.request.contextPath}/resources/images/weather/sunny.png");
+				$("div#map div#weather img").attr("src","${pageContext.request.contextPath}/resources/images/weather/sunny.png");
 			} else if (imgUrl == 'Rain') {
-				$("div#map div#weather img")
-						.attr("src",
-								"${pageContext.request.contextPath}/resources/images/weather/rainy.png");
+				$("div#map div#weather img").attr("src","${pageContext.request.contextPath}/resources/images/weather/rainy.png");
 			} else if (imgUrl == 'Mist' || imgUrl == 'Haze') {
-				$("div#map div#weather img")
-						.attr("src","${pageContext.request.contextPath}/resources/images/weather/littlecloud.png");
+				$("div#map div#weather img").attr("src","${pageContext.request.contextPath}/resources/images/weather/littlecloud.png");
+			}else if (imgUrl == 'Snow'){
+				$("div#map div#weather img").attr("src","${pageContext.request.contextPath}/resources/images/weather/snow.png");
 			}
-
-			$("div#map div#weather p").html(
-					celSius + '<i class="wi wi-celsius"></i>');
+			$("div#map div#weather p").html(celSius + '<i class="wi wi-celsius"></i>');
 		}
 
 		//skill>아이콘클릭>progressbar진행상황알림

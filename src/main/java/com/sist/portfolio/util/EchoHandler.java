@@ -16,6 +16,10 @@ public class EchoHandler extends TextWebSocketHandler{
 	//웹 소켓 세션을 저장할 배열 생성
 	private List<WebSocketSession> sessionList = new ArrayList<WebSocketSession>();
 	
+	public void WebsocketHandler() {      	
+    	log.debug("=== lee / websocket Start");
+    } 
+	
 	/**
 	 * 클라이언트와 연결 된 후 실행되는 메소드
 	 */

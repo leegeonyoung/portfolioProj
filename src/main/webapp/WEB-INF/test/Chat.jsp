@@ -31,6 +31,7 @@
     });
     // 웹소켓을 지정한 url로 연결한다.
     var sock = new SockJS("<c:url value='/echo'/>");
+    console.log("=== lee / sock : " + JSON.stringify(sock));
     sock.onmessage = onMessage;
     sock.onclose = onClose;
     // 메시지 전송
