@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sist.portfolio.mapper.UserManageMapper">
+	
+	<!-- 회원 리스트 가져오기 -->
+	<select id="selectUserList" parameterType="userManagerVO" resultType="userManagerVO">
+		SELECT T1.*
+		FROM (
+		SELECT
+			 @ROWNUM := @ROWNUM +1 AS RN
+			,USER_SEQ
+			,USER_ID
+			,USER_PWD
+			,USER_NAME
+			,USER_AGE
+			,USER_SEX
+			,USER_EMAIL
+			,USER_TEL
+		FROM TPJ_USER_MANAGE
+		WHERE 1=1
+			AND (@ROWNUM := 0) =0
+			<if test="searchKeyword != null and searchKeyword != ''">
+				AND USER_NAME = #{searchKeyword}
+			</if>
+		)T1
+	</select>
+	
+	<!-- 회원조회 -->
+	<select id="selectUser" parameterType="userManagerVO" resultType="userManagerVO">
+		SELECT
+			 USER_SEQ
+			,USER_ID
+			,USER_PWD
+			,USER_NAME
+			,USER_AGE
+			,USER_SEX
+			,USER_EMAIL
+			,USER_TEL
+		FROM TPJ_USER_MANAGE
+		WHERE 1=1
+			AND USER_SEQ = #{userSeq}
+	</select>
+	
+	<!-- 회원가입 -->
+	<insert id="insertUser" parameterType="userManagerVO">
+		<selectKey resultType="String" keyProperty="userSeq" order="BEFORE">
+			SELECT IFNULL(MAX(USER_SEQ), 0) +1 AS USER_SEQ FROM TPJ_USER_MANAGE
+		</selectKey>
+		INSERT INTO TPJ_USER_MANAGE (
+			 USER_SEQ
+			,USER_ID
+			,USER_PWD
+			,USER_NAME
+			,USER_AGE
+			,USER_SEX
+			,USER_EMAIL
+			,USER_TEL
+		) VALUES (
+			 #{userSeq}
+			,#{userId}		
+			,#{userPwd}		
+			,#{userName}		
+			,#{userAge}		
+			,#{userSex}		
+			,#{userEmail}		
+			,#{userTel}		
+		)
+	</insert>
+	
+	<!-- 회원수정 -->
+	<update id="updateUser" parameterType="userManagerVO">
+		UPDATE TPJ_USER_MANAGE SET
+			 USER_SEQ		= #{userSeq}
+			,USER_ID		= #{userId}
+			,USER_PWD		= #{userPwd}
+			,USER_NAME		= #{userName}
+			,USER_AGE		= #{userAge}
+			,USER_SEX		= #{userSex}
+			,USER_EMAIL		= #{userEmail}
+			,USER_TEL		= #{userTel}
+		WHERE 1=1
+			AND USER_SEQ = #{userSeq}
+	</update>
+
+	<!-- 회원삭제 -->
+	<delete id="deleteUser" parameterType="userManagerVO">
+		DELETE FROM TPJ_USER_MANAGE WHERE 1=1 AND USER_SEQ = #{userSeq}
+	</delete>
+</mapper>
